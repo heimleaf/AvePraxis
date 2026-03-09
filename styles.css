@@ -1,0 +1,993 @@
+/* =========================================
+   1. ПЕРЕМЕННЫЕ (CSS Variables)
+   ========================================= */
+:root {
+    /* Цвета фона */
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #0f0f0f;
+    --bg-card: #141414;
+    --bg-hover: #1a1a1a;
+
+    /* Цвета текста */
+    --text-primary: #f5f5f5;
+    --text-secondary: #a0a0a0;
+    --text-muted: #666666;
+
+    /* Акцентные цвета (Красный) */
+    --red-primary: #ff3333;
+    --red-dark: #cc0000;
+    --red-glow: rgba(255, 51, 51, 0.3);
+    --red-gradient: linear-gradient(135deg, #ff3333 0%, #cc0000 100%);
+    --border-red: rgba(255, 51, 51, 0.3);
+
+    /* Цвета состояний (Успех/Ошибка) */
+    --success: #10b981;
+    --error: #ef4444;
+
+    /* Границы и тени */
+    --border-color: #2a2a2a;
+    --border-light: #3a3a3a;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 8px -1px rgba(0, 0, 0, 0.7);
+    --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.9);
+    --shadow-red: 0 0 30px rgba(255, 51, 51, 0.2);
+
+    /* Шрифты */
+    --font-sans: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Радиусы */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+
+    /* Анимации */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =========================================
+   2. СБРОС СТИЛЕЙ (Reset)
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   3. БАЗОВЫЕ СТИЛИ (Base)
+   ========================================= */
+body {
+    font-family: var(--font-sans);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-size: 14px;
+    overflow-x: hidden;
+    font-weight: 300;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =========================================
+   4. ФОНОВЫЕ ЭФФЕКТЫ (Background Effects)
+   ========================================= */
+.red-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.05;
+    background: radial-gradient(ellipse at 15% 25%, rgba(255, 51, 51, 0.15) 0%, transparent 50%);
+    animation: glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        opacity: 0.05;
+    }
+
+    50% {
+        opacity: 0.08;
+    }
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.03;
+    background: repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(255, 51, 51, 0.1) 2px, rgba(255, 51, 51, 0.1) 4px);
+}
+
+/* =========================================
+   5. ШАПКА (Header)
+   ========================================= */
+.header {
+    background: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    transition: transform var(--transition-base);
+}
+
+.header.hidden {
+    transform: translateY(-100%);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-symbol {
+    font-size: 1.5rem;
+    color: var(--red-primary);
+    line-height: 1;
+}
+
+.logo h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--text-primary);
+    text-transform: uppercase;
+}
+
+.logo-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color var(--transition-fast);
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    color: var(--red-primary);
+}
+
+.donate-btn {
+    background: transparent;
+    color: var(--red-primary);
+    border: 1px solid var(--red-primary);
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.donate-btn:hover {
+    background: var(--red-primary);
+    color: var(--bg-primary);
+    box-shadow: var(--shadow-red);
+}
+
+/* =========================================
+   6. ОСНОВНОЙ КОНТЕНТ (Main Layout)
+   ========================================= */
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    padding-top: 4rem;
+}
+
+.content-section {
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+}
+
+.title-icon {
+    color: var(--red-primary);
+    font-size: 1.25rem;
+}
+
+/* Герой-секция */
+.hero-section {
+    padding: 4rem 0 3rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 3rem;
+}
+
+.hero-classification {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--red-primary);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--border-red);
+}
+
+.hero-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+}
+
+.hero-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.hero-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.meta-divider {
+    color: var(--red-primary);
+    opacity: 0.5;
+}
+
+/* =========================================
+   7. КОМПОНЕНТЫ (Components)
+   ========================================= */
+
+/* Карточки */
+.flashcards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.flashcard {
+    height: 140px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.flashcard-back {
+    transform: rotateY(180deg);
+}
+
+.card-label {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    background: var(--red-gradient);
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.6rem;
+    font-weight: 700;
+}
+
+.card-text {
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.card-flip-hint {
+    position: absolute;
+    bottom: 0.5rem;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+}
+
+/* Блоки контента */
+.topic-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: stretch;
+}
+
+.topic-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* Занимать всю высоту, отведенную сеткой */
+    height: 100%;
+}
+
+.content-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    transition: all var(--transition-base);
+    /* Блок растягивается на всю высоту родителя */
+    height: 100%;
+    /* Включаем flexbox для управления внутренним содержимым */
+    display: flex;
+    flex-direction: column;
+}
+
+.content-block:hover {
+    border-color: var(--border-red);
+    transform: translateY(-2px);
+}
+
+.block-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.content-block h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.content-block p {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+}
+
+/* Таблицы */
+.grammar-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.75rem 0;
+    font-size: 0.75rem;
+}
+
+.grammar-table th,
+.grammar-table td {
+    padding: 0.5rem;
+    text-align: left;
+    border: 1px solid var(--border-color);
+}
+
+.grammar-table th {
+    background: var(--bg-hover);
+    font-weight: 600;
+    font-size: 0.7rem;
+}
+
+.grammar-table td {
+    color: var(--text-secondary);
+}
+
+.block-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.block-tag {
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+    padding: 0.2rem 0.5rem;
+    border-radius: 20px;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+}
+
+.block-count {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+}
+
+/* Упражнения */
+.examples-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    /* Блок растягивается на всю высоту родителя */
+    height: 100%;
+    /* Включаем flexbox для управления внутренним содержимым */
+    display: flex;
+    flex-direction: column;
+}
+
+.examples-block:hover {
+    border-color: var(--border-red);
+    transform: translateY(-2px);
+}
+
+.exercise-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.exercise-subtitle {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.exercise-item {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+}
+
+.exercise-question {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.input-exercise {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.check-btn {
+    width: 32px;
+    height: 32px;
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.answer-input {
+    flex: 1;
+    min-width: 150px;
+    padding: 0.5rem 0.75rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+}
+
+.answer-input:focus {
+    outline: none;
+    border-color: var(--red-primary);
+}
+
+.show-answer-btn {
+    padding: 0.5rem 0.75rem;
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.75rem;
+    display: none;
+}
+
+.show-answer-btn.visible {
+    display: inline-block;
+}
+
+.correct-answer {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(16, 185, 129, 0.1);
+    border-left: 2px solid #10b981;
+    color: #10b981;
+    font-weight: 600;
+    font-size: 0.8rem;
+    display: none;
+}
+
+.correct-answer.visible {
+    display: block;
+}
+
+.answer-input.correct {
+    border-color: var(--success);
+    background: rgba(14, 183, 127, 0.399);
+}
+
+.answer-input.incorrect {
+    border-color: var(--error);
+    background: rgba(239, 68, 68, 0.1);
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* Множественный выбор (Добавлено) */
+.multiple-choice-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.choice-option {
+    padding: 0.75rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all var(--transition-fast);
+}
+
+.choice-option:hover {
+    border-color: var(--text-secondary);
+}
+
+.choice-option.selected {
+    border-color: var(--red-primary);
+    background: rgba(255, 51, 51, 0.05);
+}
+
+.choice-option.correct {
+    border-color: var(--success);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.choice-option.incorrect {
+    border-color: var(--error);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.explanation-text {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: var(--bg-hover);
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: none;
+}
+
+.explanation-text.visible {
+    display: block;
+}
+
+/* Сетка материалов */
+.materials-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+
+}
+
+/* Мини-карточки */
+.mini-flashcards-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+}
+
+.mini-flashcard {
+    height: 60px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.mini-flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.mini-flashcard.flipped .mini-flashcard-inner {
+    transform: rotateY(180deg);
+}
+
+.mini-flashcard-front,
+.mini-flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+}
+
+.mini-flashcard-back {
+    transform: rotateY(180deg);
+}
+
+.mini-card-text {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* =========================================
+   8. ПОДВАЛ (Footer)
+   ========================================= */
+.footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    padding: 2rem 1.5rem;
+    margin-top: 3rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.footer-section h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.footer-section p {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.author-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.author-link {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    transition: color var(--transition-fast);
+}
+
+.author-link:hover {
+    color: var(--red-primary);
+}
+
+/* =========================================
+   9. МОДАЛЬНЫЕ ОКНА (Modals)
+   ========================================= */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+    border-radius: var(--radius-lg);
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-size: 1.25rem;
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.modal-classification {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--red-primary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--border-red);
+}
+
+.modal-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+}
+
+.modal-header p {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.donate-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.donate-option {
+    position: relative;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    text-align: center;
+    transition: all var(--transition-base);
+}
+
+.donate-option:hover {
+    border-color: var(--red-primary);
+}
+
+.donate-option.featured {
+    border-color: var(--red-primary);
+    background: rgba(255, 51, 51, 0.1);
+}
+
+.donate-badge {
+    position: absolute;
+    top: -8px;
+    right: 0.75rem;
+    background: var(--red-gradient);
+    color: white;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    font-size: 0.6rem;
+    font-weight: 700;
+}
+
+.donate-amount {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.donate-desc {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.donate-note {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* =========================================
+   10. АДАПТИВНОСТЬ (Media Queries)
+   ========================================= */
+@media (max-width: 900px) {
+
+    .topic-layout,
+    .materials-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .header-content {
+        padding: 0.5rem 1rem;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .hero-title {
+        font-size: 1.5rem;
+    }
+
+    .flashcards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .mini-flashcards-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .donate-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+.rule-list,
+.example-list {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+.rule-list li,
+.example-list li {
+    margin-bottom: 0.5rem;
+}
+
+
+/* Example Subblocks */
+.example-subblock {
+    padding: 1rem 0;
+}
+
+.example-subblock h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.example-subblock p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.example-sentence {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+}
+
+.example-en {
+    color: var(--accent-primary);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.example-ru {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.example-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 1rem 0;
+}
